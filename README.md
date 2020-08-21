@@ -1,13 +1,13 @@
 # Overview
 This project is the first one that I tackled using platform io for Visual Code. I wanted to try out advance editing capabilities of visual code in conjuction with the plaform io extension, especially when compared to the very simple Arduino IDE. I have to say that platform io did not disappoint.
 
-Also, this is my first attempt at using an IOT cloud service, in this case ThingSpeak which allows quite a few free devices and variables for free. A definite plus when compared to the Arduino Cloud.
+Also, this is my first attempt at using an IOT cloud service, in this case ThingSpeak, which allows quite a few devices and variables for free. A definite plus when compared to the Arduino Cloud.
 
-My inspiration was to compare the fluctuations through out the day between sections of my place, namely the attic and some common areas. I want to see to what degree the attic temperature affected the temperature of the house and operation of my AC unit.
+My motivation was to create a code to be used in multiple devices to compare the fluctuations through out the day between sections of my place, namely the attic and some common areas. I wanted to see to what degree the attic temperature affected the temperature of the house and operation of my AC unit.
 
 ![image-20200820231610744](images/image-20200820231610744.png)
 
-I included a celsius offset for displaying the current offset to better calibrate against another thermometer for consistent comparisons. The offset is stored in the flash to persist through power cycles.
+I included a celsius offset for displaying the current offset to better calibrate against another thermometer for consistent comparisons. The offset is stored in the flash to persist through power cycles. The offset is applied to the celsius reading before converting to Fahrenheit.
 
 # Requirements
 

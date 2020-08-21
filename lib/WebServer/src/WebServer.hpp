@@ -13,8 +13,9 @@ public:
     const size_t CAPACITY;
     DynamicJsonDocument doc;
     JsonObject data;
+    String jsonString;
 
-    ESP8266WebServer server;
+    std::unique_ptr<ESP8266WebServer> server;
 
     WebServer(short port, int &offsetAddress, float &temperatureOffset);
     void startMulticastDNSService(String name);
@@ -23,6 +24,7 @@ public:
     void defineEndPoints();
     void handleClient();
     void begin();
+    ~WebServer();
 
 private:
     // Offset EEPROM (Flash) Address
