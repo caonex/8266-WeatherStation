@@ -5,7 +5,12 @@ Also, this is my first attempt at using an IOT cloud service, in this case Thing
 
 My inspiration was to compare the fluctuations through out the day between sections of my place, namely the attic and some common areas. I want to see to what degree the attic temperature affected the temperature of the house and operation of my AC unit.
 
+![image-20200820231610744](images/image-20200820231610744.png)
+
+I included a celsius offset for displaying the current offset to better calibrate against another thermometer for consistent comparisons. The offset is stored in the flash to persist through power cycles.
+
 # Requirements
+
 To build this, you need visual code with platform io, an 8266 microcontroller, a 128x64 oled I2C display, a ThingSpeak account, and either a DHT11 or a DHT22 (the more accurate of the two).
 
 I used the display to be able to read current readings as I moved the device from place to place. I did not want to have to rely on my phone or a computer all of the time.
@@ -26,3 +31,8 @@ This code makes use of the 8266WebServer library. I used it to serve a simple Go
 
 # Sample output
 
+![image-20200820231303601](images/image-20200820231303601.png)
+
+# Known Issues
+
+The mDNS library for 8266 has a bug which is preventing this implementation from letting other devices find it based on a name. There is an open bug on the 8266 Arduino github page already.
