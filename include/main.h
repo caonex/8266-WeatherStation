@@ -11,10 +11,6 @@
  * placement in the implementation.
  **********************************************************/
 
-// Gets the specified variable type T from the provided address in memory
-template <typename T>
-T getOffsetFromMemory(int address, T t);
-
 // Run the provided lambda function on each interval tick
 void performTaskOnlyEveryMS(long interval, void (*task)());
 

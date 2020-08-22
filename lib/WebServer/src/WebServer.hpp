@@ -24,13 +24,20 @@ public:
     void defineEndPoints();
     void handleClient();
     void begin();
+
+    template <class T>
+    void getValueFromAddress(int address, T &t);
+
+    template <typename T>
+    void saveValueToAddress(int address, T &t);
+
     ~WebServer();
+    // Offset variables
+    float &temperatureOffset;
 
 private:
     // Offset EEPROM (Flash) Address
     int offsetAddress;
-    // Offset variables
-    float temperatureOffset;
 };
 
 #endif

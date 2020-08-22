@@ -22,7 +22,7 @@ unsigned long thingSpeakChannelNumber = SECRET_CH_ID;
 char *thingSpeakWriteKey = SECRET_WRITE_APIKEY;
 
 // Instance of DHT which is used to read from either DHT11 or DHT22 temperature & humidity sensors
-DHT dht(DHTPIN, DHTTYPE);   // Declaration for DHT11, the default count = 6 will be the default for third parameter.
+DHT dht(DHTPIN, DHTTYPE); // Declaration for DHT11, the default count = 6 will be the default for third parameter.
 //DHT dht(DHTPIN, DHTTYPE, 30);   // Declaration for DHT22, without the 30 counts, it does not work.
 
 // WIFI Settings
@@ -30,13 +30,15 @@ char ssid[] = PRIMARY_SECRET_SSID; // your network SSID (name)
 char pass[] = PRIMARY_SECRET_PASS; // your network password
 char ssidWork[] = SECONDARY_SECRET_SSID;
 char passWork[] = SECONDARY_SECRET_PASS;
-int keyIndex = 0;          // your network key Index number (needed only for WEP)
+int keyIndex = 0; // your network key Index number (needed only for WEP)
 
 // New WIFI Client
 WiFiClient client;
 
-// Create an instance of WebServer in the stack, it is a project only library. 
+// Create an instance of WebServer in the stack, it is a project only library.
 // It is defined in the lib folder.
+// This library is also managing the access to the simulated EEPROM as it gets input from user
+// and stores it.
 WebServer ws(80, offsetAddress, temperatureOffset);
 
 void setup()
@@ -45,7 +47,8 @@ void setup()
     Serial.begin(9600);
 
     // Read Offset from Flash
-    temperatureOffset = getOffsetFromMemory<float>(offsetAddress, temperatureOffset);
+    //ws.getValueFromAddress<float>(offsetAddress, temperatureOffset);
+    EEPROM.get<float>(offsetAddress, temperatureOffset);
 
     // Initialize device
     dht.begin();
@@ -69,8 +72,6 @@ void setup()
     { // Address 0x3D for 128x64
         Serial.println(F("SSD1306 allocation failed"));
     }
-
-
 }
 
 void loop()
@@ -88,13 +89,6 @@ void loop()
 
     // Listen and handle any http client hitting our built-in site.
     ws.handleClient();
-}
-
-template <typename T>
-T getOffsetFromMemory(int address, T t)
-{
-    // Store it to preserve it between battery cycles
-    return EEPROM.get<T>(address, t);
 }
 
 void performTaskOnlyEveryMS(long interval, void (*task)())

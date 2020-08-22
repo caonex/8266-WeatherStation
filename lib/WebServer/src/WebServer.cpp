@@ -20,6 +20,10 @@ WebServer::WebServer(short port, int &offsetAddress, float &temperatureOffset) :
 
     // Add service to MDNS-SD
     MDNS.addService("http", "tcp", port);
+
+    // Initialize EEPROM storage, we just need the size of float
+    // Without this line anything reading or writing from it, wont work.
+    EEPROM.begin(sizeof(float) * 4);
 }
 
 void WebServer::startMulticastDNSService(String name)
@@ -83,13 +87,13 @@ void WebServer::defineEndPoints()
         // Does it have the argument we listen for?
         if (server->hasArg("value"))
         {
-            // Get the celsius offset
+            // Make sure to use the same address and simply replace the contents
+            // Hence the use of the dereference operator to get value at address.
             temperatureOffset = server->arg("value").toFloat();
+            doc["celsiusOffset"] = temperatureOffset;
 
             // Store it to preserve it between battery cycles
-            EEPROM.put(offsetAddress, temperatureOffset);
-
-            Serial.print("\nGot a new offset: "); Serial.println(temperatureOffset);
+            saveValueToAddress(offsetAddress, temperatureOffset);
 
             // Return success
             server->send(200, "text/plain", "Got your message, dawg!!");
@@ -108,6 +112,30 @@ void WebServer::handleClient()
 void WebServer::begin()
 {
     server->begin();
+}
+
+template <class T>
+void WebServer::getValueFromAddress(int address, T &t)
+{
+    EEPROM.get<T>(address, t);
+
+    Serial.print("Read value ");
+    Serial.print(t);
+    Serial.print(" from ");
+    Serial.println(address);
+
+    return t;
+}
+
+template <typename T>
+void WebServer::saveValueToAddress(int address, T &t)
+{
+    EEPROM.put<T>(address, t);
+    EEPROM.commit();
+    Serial.print("Saved value ");
+    Serial.print(t);
+    Serial.print(" to ");
+    Serial.println(address);
 }
 
 WebServer::~WebServer()
