@@ -140,14 +140,14 @@ void WebServer::saveValueToAddress(int address, T &t)
 
 // This line allows linking to take place, as it compile this particular
 // use of the template. The idea is that a template is not code that is compiled
-// until it is used. They are just declarations. This forces the definition for 
+// until it is used. They are just declarations. This forces the definition for
 // T being a float to be recognized and made ready by compiler.
 // The alternative is to move the implementations above to the header file it self. In fact, if you just
 // do that cut and paste below the class declaration, it will work, I tried it!!
 
-// This also means you would have to predeclare in anticipation of all possible uses that you want. Whereas 
+// This also means you would have to predeclare in anticipation of all possible uses that you want. Whereas
 // when declared fully in header file, all uses are allowed.
-template void WebServer::getValueFromAddress<float>(int, float&);
+template void WebServer::getValueFromAddress<float>(int, float &);
 
 #endif
 

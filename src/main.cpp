@@ -25,7 +25,7 @@ char *thingSpeakWriteKey = SECRET_WRITE_APIKEY;
 #if DHTTYPE == DHT11
 DHT dht(DHTPIN, DHTTYPE); // Declaration for DHT11, the default count = 6 will be the default for third parameter.
 #else
-DHT dht(DHTPIN, DHTTYPE, 30);   // Declaration for DHT22, without the 30 counts, it does not work.
+DHT dht(DHTPIN, DHTTYPE, 30); // Declaration for DHT22, without the 30 counts, it does not work.
 #endif
 
 // WIFI Settings
