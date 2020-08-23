@@ -64,7 +64,11 @@ namespace DisplayHandler
 
     bool begin()
     {
-        return display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+        bool didStart = display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+        if (didStart){
+            setInitialState();
+        }
+        return didStart;
     }
 
     void setInitialState()

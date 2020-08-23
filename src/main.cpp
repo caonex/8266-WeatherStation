@@ -93,9 +93,12 @@ void loop()
     ws.handleClient();
 }
 
-// Only performs the provided task each time the interval elapses.
+// Only performs the provided task each time the interval elapses
+// with the exception of when it is first called. It fires once.
+// E.g 0, 60, 120, ...
 void performTaskOnlyEveryMS(long interval, void (*task)())
 {
+    static bool didRunOnce = false;
     static const unsigned long REFRESH_INTERVAL = interval; // ms
     static unsigned long lastRefreshTime = 0;
 
@@ -106,6 +109,12 @@ void performTaskOnlyEveryMS(long interval, void (*task)())
 
         // Perform the desired task
         (*task)();
+    } else if(!didRunOnce) {
+        // Run the task
+        (*task)();
+
+        // Communicate it did in fact run!!
+        didRunOnce = true;
     }
 }
 
