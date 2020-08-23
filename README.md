@@ -5,7 +5,7 @@ Also, this is my first attempt at using an IOT cloud service, in this case Thing
 
 My motivation was to create a code to be used in multiple devices to compare the fluctuations through out the day between sections of my place, namely the attic and some common areas. I wanted to see to what degree the attic temperature affected the temperature of the house and operation of my AC unit.
 
-![image-20200820231610744](images/image-20200820231610744.png)
+![image-20200822230623035](images/image-20200822230623035.png) Prototyping Board with NodeMCU 8266 12E, a DHT11 sensor, and UCTRONICS 0.96 Inch OLED Module 12864 128x64 Yellow Blue.
 
 I included a celsius offset for displaying the current offset to better calibrate against another thermometer for consistent comparisons. The offset is stored in the flash to persist through power cycles. The offset is applied to the celsius reading before converting to Fahrenheit.
 
