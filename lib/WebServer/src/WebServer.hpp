@@ -40,4 +40,29 @@ private:
     int offsetAddress;
 };
 
+template <class T>
+void WebServer::getValueFromAddress(int address, T &t)
+{
+    EEPROM.get<T>(address, t);
+
+    Serial.print("Read value ");
+    Serial.print(t);
+    Serial.print(" from ");
+    Serial.println(address);
+
+    return t;
+}
+
+template <typename T>
+void WebServer::saveValueToAddress(int address, T &t)
+{
+    EEPROM.put<T>(address, t);
+    EEPROM.commit();
+    Serial.print("Saved value ");
+    Serial.print(t);
+    Serial.print(" to ");
+    Serial.println(address);
+}
+
+
 #endif
