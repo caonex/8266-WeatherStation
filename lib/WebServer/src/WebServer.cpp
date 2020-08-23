@@ -114,6 +114,43 @@ void WebServer::begin()
     server->begin();
 }
 
+#if IMPLEMENT_TEMPLATES_IN_CPP_FILE == true
+
+template <typename T>
+void WebServer::getValueFromAddress(int address, T &t)
+{
+    EEPROM.get<T>(address, t);
+
+    Serial.print("Read value ");
+    Serial.print(t);
+    Serial.print(" from ");
+    Serial.println(address);
+}
+
+template <typename T>
+void WebServer::saveValueToAddress(int address, T &t)
+{
+    EEPROM.put<T>(address, t);
+    EEPROM.commit();
+    Serial.print("Saved value ");
+    Serial.print(t);
+    Serial.print(" to ");
+    Serial.println(address);
+}
+
+// This line allows linking to take place, as it compile this particular
+// use of the template. The idea is that a template is not code that is compiled
+// until it is used. They are just declarations. This forces the definition for 
+// T being a float to be recognized and made ready by compiler.
+// The alternative is to move the implementations above to the header file it self. In fact, if you just
+// do that cut and paste below the class declaration, it will work, I tried it!!
+
+// This also means you would have to predeclare in anticipation of all possible uses that you want. Whereas 
+// when declared fully in header file, all uses are allowed.
+template void WebServer::getValueFromAddress<float>(int, float&);
+
+#endif
+
 WebServer::~WebServer()
 {
     //delete jsonString;

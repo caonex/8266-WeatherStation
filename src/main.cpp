@@ -47,8 +47,7 @@ void setup()
     Serial.begin(9600);
 
     // Read Offset from Flash
-    //ws.getValueFromAddress<float>(offsetAddress, temperatureOffset);
-    EEPROM.get<float>(offsetAddress, temperatureOffset);
+    ws.getValueFromAddress<float>(offsetAddress, temperatureOffset);
 
     // Initialize device
     dht.begin();

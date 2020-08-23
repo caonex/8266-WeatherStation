@@ -7,6 +7,16 @@
 #include <ArduinoJson.h>
 #include <EEPROM.h>
 
+/*
+If implementing the templates in the source file (cpp), you have to really do more.
+You have to implement them and then create sample declaration for each possible
+template type that could be use. You can play around with the definition below to see
+the implementation in this file be disregarded and use the ones from the source file.
+
+In this case, implementing in header file saves in compilation time.
+*/
+#define IMPLEMENT_TEMPLATES_IN_CPP_FILE false
+
 class WebServer
 {
 public:
@@ -25,7 +35,7 @@ public:
     void handleClient();
     void begin();
 
-    template <class T>
+    template <typename T>
     void getValueFromAddress(int address, T &t);
 
     template <typename T>
@@ -40,7 +50,9 @@ private:
     int offsetAddress;
 };
 
-template <class T>
+// The template declarations begin here.
+#if IMPLEMENT_TEMPLATES_IN_CPP_FILE == false
+template <typename T>
 void WebServer::getValueFromAddress(int address, T &t)
 {
     EEPROM.get<T>(address, t);
@@ -49,8 +61,6 @@ void WebServer::getValueFromAddress(int address, T &t)
     Serial.print(t);
     Serial.print(" from ");
     Serial.println(address);
-
-    return t;
 }
 
 template <typename T>
@@ -63,6 +73,6 @@ void WebServer::saveValueToAddress(int address, T &t)
     Serial.print(" to ");
     Serial.println(address);
 }
-
+#endif
 
 #endif
