@@ -5,7 +5,7 @@
 #include <secrets.hpp>
 #include <WifiConfigurator.hpp>
 #include <WebServer.hpp>
-#include <TaskScheduler.h>
+// #include <TaskScheduler.h>
 
 #include "DisplayHandler.hpp"
 
@@ -93,6 +93,7 @@ void loop()
     ws.handleClient();
 }
 
+// Only performs the provided task each time the interval elapses.
 void performTaskOnlyEveryMS(long interval, void (*task)())
 {
     static const unsigned long REFRESH_INTERVAL = interval; // ms
