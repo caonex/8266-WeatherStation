@@ -58,6 +58,10 @@ Used to interact with the DHT temperature sensors. This is a requirement of the 
 
 Also, used to interact with the DHT sensors. This is the primary library used to intantiate the class to read from the sensor.
 
+## ESP8266WiFi & ESP8266WiFiMulti<ESP8266WiFi.h> & <ESP8266WiFiMulti.h>
+
+These two are used to handle connections to Wifi. The WifiMulti simply allows you to provide as many configurations as possible and it will connect to the strongest if many are within range. I used it for when I moved this project between different locations.
+
 # Webserver
 
 This code makes use of the 8266WebServer library. I used it to serve a simple Google Material Design site which show the current environment readings. The application is completely in html and javascript and is only downloaded once. Any subsequent data updates after every 30 seconds are made possible via the /data endpoint which serves a json file with all of the details for the client side to refresh.
